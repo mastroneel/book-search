@@ -1,0 +1,498 @@
+<head>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+
+
+    <div class="row title-row">
+      <div class="col-xs-12">
+        <h1>Free Ebook Search</h1>
+      </div>
+    </div>
+
+      <input type="text" v-model="search" placeholder="Search title.."/>
+
+      <div class="row">
+        <div v-for="book in filteredList" class="col-xs-12 col-sm-4 col-md-3">
+          <a v-bind:href="book.link" target="_blank">
+            <div class="img-container">
+              <img v-bind:src="book.img"/>
+            </div>
+            <a v-bind:href="book.link">
+              <h5>
+                {{ book.title }}
+              </h5>
+              <p>
+                {{ book.author }}
+              </p>
+            </a>
+          </a>
+        </div>
+      </div>
+
+
+
+
+
+
+
+  </div>
+
+  <script>
+
+
+    class Book {
+      constructor(title, author, img, link) {
+        this.title = title;
+        this.author = author;
+        this.img = img;
+        this.link = link;
+      }
+    }
+
+    new Vue ({
+      el: '#app',
+      data: {
+
+
+        search: '',
+        bookList : [
+          new Book(
+            'Metamorphosis',
+            'Franz Kafka',
+            'https://writingrightdotnet1.files.wordpress.com/2015/04/metamorphosis.jpg?w=312',
+            'https://www.planetebook.com/free-ebooks/the-metamorphosis.pdf'
+          ),
+          new Book(
+            'Dracula',
+            'Bram Stoker',
+            'https://img.etsystatic.com/il/d5a496/807294726/il_570xN.807294726_k9rr.jpg?version=0',
+            'http://www.planetpdf.com/planetpdf/pdfs/free_ebooks/Dracula_NT.pdf'
+          ),
+          new Book(
+            'The Importance of Being Earnest',
+            'Oscar Wilde',
+            'https://www.brownpapertickets.com/g/e/935089-250.gif',
+            'https://www.rtmsd.org/cms/lib9/PA01000204/Centricity/Domain/258/the_importance_of_being_earnest.pdf'
+          ),
+          new Book(
+            'A Tale of Two Cities',
+            'Charles Dickens',
+            'https://kjkoukas.files.wordpress.com/2015/09/a-tale-of-two-cities2.jpg',
+            'http://www.planetpublish.com/wp-content/uploads/2011/11/A_Tale_of_Two_Cities_T.pdf'
+          ),
+          new Book(
+            "Alice's Adventure in Wonderland",
+            'Lewis Carroll',
+            'https://images.penguinrandomhouse.com/cover/9780147515872',
+            'https://www.adobe.com/be_en/active-use/pdf/Alice_in_Wonderland.pdf'
+          ),
+          new Book(
+            'Pride & Prejudice',
+            'Jane Austen',
+            'https://i.pinimg.com/originals/3b/47/d1/3b47d124002685f2a3c67e47383232c7.jpg',
+            'https://www.gutenberg.org/files/1342/1342-pdf.pdf'
+          ),
+          new Book(
+            'Moby Dick',
+            'Herman Melville',
+            'https://i.pinimg.com/originals/c9/68/93/c9689340a6745f6c1decc6ba6e4746d9.jpg',
+            'http://www.gasl.org/refbib/Melville__Moby_Dick.pdf'
+          ),
+          new Book(
+            'The Adventures of Huckleberry Finn',
+            'Mark Twain',
+            'https://i.pinimg.com/originals/ef/bc/07/efbc07210ade10f44911ae77db43de5d.jpg',
+            'https://contentserver.adobe.com/store/books/HuckFinn.pdf'
+          ),
+          new Book(
+            'The Adventures of Tom Sawyer',
+            'Mark Twain',
+            'https://images-na.ssl-images-amazon.com/images/I/51KpQolMi0L._SX310_BO1,204,203,200_.jpg',
+            'https://www.planetebook.com/free-ebooks/the-adventures-of-tom-sawyer.pdf'
+          ),
+          new Book(
+            'The Strange Case of Dr. Jekyll and Mr. Hyde',
+            'Robert Louis Stevenson',
+            'https://47637-153752-raikfcquaxqncofqfm.stackpathdns.com/wp-content/uploads/2016/10/9781847493781.jpg',
+            'https://www.gutenberg.org/files/43/43-h/43-h.htm'
+          ),
+          new Book(
+            "Grimm's Fairy Tales",
+            'The Brothers Grimm',
+            'http://www.wondersandmarvels.com/wp-content/uploads/2014/09/Grimm-Cover-Art.jpg',
+            'https://www.gutenberg.org/files/2591/old/grimm10.pdf'
+          ),
+          new Book(
+            'The Complete Sherlock Holmes',
+            'Sir Arthur Conan Doyle',
+            'https://images-na.ssl-images-amazon.com/images/I/51vl%2BFO8g-L._SX331_BO1,204,203,200_.jpg',
+            'https://maggiemcneill.files.wordpress.com/2012/04/the-complete-sherlock-holmes.pdf'
+          ),
+          new Book(
+            'The Yellow Wallpaper',
+            'Charlotte Perkins Gilman',
+            'https://images-na.ssl-images-amazon.com/images/I/61qfV7f2Q3L._SX331_BO1,204,203,200_.jpg',
+            'https://www.nlm.nih.gov/theliteratureofprescription/exhibitionAssets/digitalDocs/The-Yellow-Wall-Paper.pdf'
+          ),
+          new Book(
+            'The Illiad',
+            'Homer',
+            'http://manybooks.net/images/h/homer/homeretext00iliad10.jpg',
+            'https://www.gutenberg.org/files/6130/6130-pdf.pdf'
+          ),
+          new Book(
+            'The Odyssey',
+            'Homer',
+            'https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/748bd423676041.56326e634fbf7.jpg',
+            'https://www.planetebook.com/free-ebooks/the-odyssey.pdf'
+          ),
+          new Book(
+            'The Picture of Dorian Gray',
+            'Oscar Wilde',
+            'https://freebooksummary.com/wp-content/uploads/2017/04/The-Picture-of-Dorian-Gray.jpg',
+            'http://www.planetpublish.com/wp-content/uploads/2011/11/The_Picture_of_Dorian_Gray_NT.pdf'
+          ),
+          new Book(
+            'Great Expectations',
+            'Charles Dickens',
+            'https://i.pinimg.com/originals/db/1b/30/db1b307f7b5ef484b64c1ed9acb1c2b1.jpg',
+            'http://www.planetpdf.com/planetpdf/pdfs/free_ebooks/Great_Expectations_T.pdf'
+          ),
+          new Book(
+            'The Prince',
+            'Niccolò Machiavelli',
+            'https://cdn2.penguin.com.au/covers/400/9780099518495.jpg',
+            'https://www.victoria.ac.nz/lals/about/staff/publications/paul-nation/Prince-Adapted2.pdf'
+          ),
+          new Book(
+            'War and Peace',
+            'Leo Tolstoy',
+            'https://i.pinimg.com/originals/e5/eb/4b/e5eb4b3f941550572028f3a92f16450c.jpg',
+            'www.planetpdf.com/planetpdf/pdfs/free_ebooks/War_and_Peace_NT.pdf'
+          ),
+          new Book(
+            'Emma',
+            'Jane Austen',
+            'https://i.pinimg.com/originals/a6/a3/c2/a6a3c22d6f8afa4e4e0dd32242746cdd.jpg',
+            'https://www.gutenberg.org/files/158/158-pdf.pdf'
+          ),
+          new Book(
+            'Ulysses',
+            'James Joyce',
+            'https://i.pinimg.com/originals/dc/1b/dc/dc1bdccbec107aba2e2088e95b876e4b.jpg',
+            'http://www.planetpdf.com/planetpdf/pdfs/free_ebooks/Ulysses_NT.pdf'
+          ),
+          new Book(
+            'Jane Eyre',
+            'Charlotte Brontë',
+            'https://2982-presscdn-29-70-pagely.netdna-ssl.com/wp-content/uploads/2016/09/Barnes-and-Noble.jpg',
+            'http://www.planetpdf.com/planetpdf/pdfs/free_ebooks/jane_eyre_nt.pdf'
+          ),
+          new Book(
+            'A Modest Proposal',
+            'Jonathan Swift',
+            'https://images-na.ssl-images-amazon.com/images/I/41K-it08mUL.SX316.SY316.jpg',
+            'http://www.readwritethink.org/files/resources/30827_modestproposal.pdf'
+          ),
+          new Book(
+            'The Brothers Karamazov',
+            'Fyodor Dostoevsky',
+            'https://sicksadbookclub.files.wordpress.com/2014/06/karamazov20portfolio20ex2.png',
+            'https://www.gutenberg.org/files/28054/28054-pdf.pdf'
+          ),
+          new Book(
+            'The Count of Monte Cristo',
+            'Alexandre Dumas',
+            'https://covers.openlibrary.org/b/id/7883995-L.jpg',
+            'http://msdl.cs.mcgill.ca/people/tfeng/books/The%20Count%20of%20Monte%20Cristo.pdf'
+          ),
+          new Book(
+            'The Republic',
+            'Plato',
+            'http://covers.feedbooks.net/book/4104.jpg?size=large&t=1491312560',
+            'http://www.inp.uw.edu.pl/mdsie/Political_Thought/Plato-Republic.pdf'
+          ),
+          new Book(
+            'Wuthering Heights',
+            'Emily Brontë',
+            'https://i.pinimg.com/originals/b2/b3/03/b2b303e5687d4927ca31251928c6ff7a.jpg',
+            'https://www.ucm.es/data/cont/docs/119-2014-04-09-Wuthering%20Heights.pdf'
+          ),
+          new Book(
+            'Siddartha',
+            'Herman Hesse',
+            'https://i.pinimg.com/originals/aa/28/58/aa2858292173d363ff95495448652909.jpg',
+            'http://philosophy.lander.edu/oriental/siddhartha.pdf'
+          ),
+          new Book(
+            'Leviathan',
+            'Thomas Hobbes',
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTjVsQ0omWtmsfiayKDoPFeDIQhjmMrbKwSQKTBpvWwzCFGxemqA',
+            'http://files.libertyfund.org/files/869/0161_Bk.pdf'
+          ),
+          new Book(
+            'Beyond Good and Evil',
+            'Friedrich Nietzsche',
+            'https://i.pinimg.com/originals/0a/c3/e1/0ac3e11339f50b5d6a7adcb8b2f94878.jpg',
+            'http://www.planetpublish.com/wp-content/uploads/2011/11/Beyond_Good_and_Evil_NT.pdf'
+          ),
+          new Book(
+            'Les Misérables',
+            'Victor Hugo',
+            'https://i.pinimg.com/736x/7e/69/00/7e6900c6196c3142f6ef177f6653505e--les-miserables-book-jacket.jpg',
+            'https://www.planetebook.com/free-ebooks/les-miserables.pdf'
+          ),
+          new Book(
+            "Gulliver's Travels",
+            'Jonathan Swift',
+            'https://i.pinimg.com/236x/16/d9/eb/16d9ebe3cea018996dca5863d46505c9--gullivers-travels-book-illustrations.jpg',
+            'https://www.planetebook.com/free-ebooks/gullivers-travels.pdf'
+          ),
+          new Book(
+            'Walden',
+            'Henry David Thoreau',
+            'https://kbimages1-a.akamaihd.net/8570cdb4-bb6f-4196-b67f-af390aef2182/1200/1200/False/walden-illustrated-audiobook-download-link-active-toc.jpg',
+            'https://wwnorton.com/college/history/america-essential-learning/docs/HDThoreau-Walden-1854.pdf'
+          ),
+          new Book(
+            'Pygmalion',
+            'George Bernard Shaw',
+            'https://images-na.ssl-images-amazon.com/images/I/51SPDS028YL._SX312_BO1,204,203,200_.jpg',
+            'http://www.kkoworld.com/kitablar/Bernard_Shaw_Secilmis_eserler_eng.pdf'
+          ),
+          new Book(
+            'Meditations',
+            'Marcus Aurelius',
+            'https://dspncdn.com/a1/media/692x/40/df/82/40df825ba53061ecec6f24f3d47f4cd9.jpg',
+            'http://seinfeld.co/library/meditations.pdf'
+          ),
+          new Book(
+            'Thus Spoke Zarathustra',
+            'Friedrich Nietzsche',
+            'https://images-na.ssl-images-amazon.com/images/I/41-uqz7A9kL._BO1,204,203,200_.jpg',
+            'https://nationalvanguard.org/books/Thus-Spoke-Zarathustra-by-F.-Nietzsche.pdf'
+          ),
+          new Book(
+            'Romeo & Juliet',
+            'William Shakespeare',
+            'https://i0.wp.com/thefoxisblack.com/blogimages//Jaclyn-Threadgill-Romeo-Juliet-Cover-576x777.jpg?resize=576%2C777',
+            'http://learningstorm.org/wp-content/uploads/2016/02/RMEOJLET-1.pdf'
+          ),
+          new Book(
+            'The Complete Tales and Poems',
+            'Edgar Allan Poe',
+            'https://s-media-cache-ak0.pinimg.com/originals/13/0f/ab/130fab6df11053b00ffd94e0b3693742.jpg',
+            'http://www.xenia.k12.oh.us/userfiles/251/Edgar%20Allan%20Poe%20-%20Complete%20Tales%20%20Poems.pdf'
+          ),
+          new Book(
+            'On the Origin of Species',
+            'Charles Darwin',
+            'http://orcz.com/images/7/7f/Originspeciesfrontdayzsa.jpg',
+            'http://darwin-online.org.uk/converted/pdf/1861_OriginNY_F382.pdf'
+          ),
+          new Book(
+            'Candide',
+            'Voltaire',
+            'https://i.pinimg.com/originals/ca/2b/39/ca2b39d642c428b789f3174c691e176b.jpg',
+            'https://ocw.mit.edu/courses/literature/21l-448j-darwin-and-design-fall-2003/readings/lecture4.pdf'
+          ),
+          new Book(
+            'The Wizard of Oz',
+            'L. Frank Baum',
+            'https://images-na.ssl-images-amazon.com/images/I/51ruxJ8Ko1L._SX360_BO1,204,203,200_.jpg',
+            'http://www.huzheng.org/bookstore/TheWonderfulWizardOfOz.pdf'
+          ),
+          new Book(
+            'The Divine Comedy',
+            'Dante Alighieri',
+            'https://prodimage.images-bn.com/pimages/9781435162082_p0_v2_s550x406.jpg',
+            'http://swcta.net/moore/files/2013/10/dante-longfellow.pdf'
+          ),
+          new Book(
+            'Crime and Punishment',
+            'Fyodor Dostoevsky',
+            'http://www.audiobooksworld.org/image/cache/catalog/product/crime-and-punishment-300x450.jpg',
+            'http://www.planetpublish.com/wp-content/uploads/2011/11/Crime_and_Punishment_T.pdf'
+          ),
+          new Book(
+            'Anna Karenina',
+            'Leo Tolstoy',
+            'https://frisbeebookjournal.files.wordpress.com/2010/05/annakerinaml.jpg',
+            'http://www.planetpdf.com/planetpdf/pdfs/free_ebooks/Anna_Karenina_NT.pdf'
+          ),
+          new Book(
+            'Don Quixote',
+            'Miguel de Cervantes',
+            'https://i.pinimg.com/originals/a9/0d/db/a90ddbf482ef3695d8cf1235c67dad67.jpg',
+            'http://www.infojur.ufsc.br/aires/arquivos/literatura%20dom%20quixote%20book0530.pdf'
+          ),
+          new Book(
+            'Madame Bovary',
+            'Gustave Flaubert',
+            'http://farm4.static.flickr.com/3222/3003863908_c2b152c177.jpg',
+            'https://www.stmarys-ca.edu/sites/default/files/attachments/files/Madame_Bovary.pdf'
+          ),
+          new Book(
+            'The Trial',
+            'Franz Kafka',
+            'https://dspncdn.com/a1/media/692x/e6/d3/17/e6d3177cd1b913cffee63987f19bc28c.jpg',
+            'https://www.planetebook.com/free-ebooks/the-trial.pdf'
+          ),
+          new Book(
+            'Cyrano de Bergerac',
+            'Edmond Rostand',
+            'https://i.pinimg.com/originals/d7/48/e0/d748e0b75bc7149d53e32b7dca9023eb.jpg',
+            'http://pinkmonkey.com/dl/library1/book1604.pdf'
+          ),
+          new Book(
+            'The Castle of Otranto',
+            'Horace Walpole',
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzP4ESRqeOaHEbeWGo7-26z5vUOYKGFlCYQnXJQ7HsUKbs6G0R',
+            'http://pinkmonkey.com/dl/library1/digi452.pdf'
+          ),
+          new Book(
+            'The Canterbury Tales',
+            'Geoffrey Chaucer',
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbfe9LqvIlZ2p-nLO1UGsAgzibSpHB3M13MwGqjfxDKKDK4wBf5w',
+            'http://academic.brooklyn.cuny.edu/webcore/murphy/canterbury/2genpro.pdf'
+          ),
+          new Book(
+            'Lysistrata',
+            'Aristophanes',
+            'https://i.pinimg.com/originals/22/e9/35/22e9350ff7b8488d225e309dd004dfc2.jpg',
+            'https://lcsl.uic.edu/docs/default-source/classics/the-original-ancient-text.pdf?sfvrsn=0'
+          ),
+          new Book(
+            'Oedipus Rex',
+            'Sophocles',
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVczH63qDZYdi5SmIJeD1guIYk1WZh0qnrgvKnREVXG_F-O6Q1',
+            'http://abs.kafkas.edu.tr/upload/225/Oedipus_the_King_Full_Text.pdf'
+          ),
+          new Book(
+            'The Complete Plays',
+            'Anton Chekov',
+            'https://i.pinimg.com/originals/90/30/8b/90308b57b4b8305d4771124acb62314d.jpg',
+            'http://hackthehearst.berkeley.edu/the_complete_plays_anton_chekhov.pdf'
+          ),
+        ],
+      },
+      methods: {
+
+      },
+      computed: {
+        filteredList() {
+          return this.bookList.filter(book => {
+            return book.title.toLowerCase().includes(this.search.toLowerCase())
+          })
+        },
+
+      },
+    });
+
+
+
+  </script>
+
+  <style>
+
+    @import url('https://fonts.googleapis.com/css?family=Bitter');
+
+    body {
+      background-color: #131313;
+      color: #fff;
+      padding: 0 15px;
+      font-family: 'Bitter', sans-serif;
+    }
+
+    .title-row {
+      text-align: center;
+      width: 100%;
+    }
+
+    .col-xs-12 {
+      width: 100%;
+      text-align: center;
+    }
+
+    .img-container {
+      height: 270px;
+      width: 195px;
+      text-align: center;
+      margin: 0 auto;
+    }
+
+    img {
+      height: 250px;
+      width: 175px;
+      display: block;
+      margin: 55px auto 0 auto;
+      transition: 0.3s;
+    }
+
+    h1 {
+      text-align: center;
+      padding-top: 40px;
+      margin: 0;
+    }
+
+    h5 {
+      margin-top: -5px;
+    }
+
+    p {
+      margin-top: -10px;
+    }
+
+    h5, p {
+      text-align: center;
+    }
+
+    a, a:visited {
+      color: #fff;
+      text-decoration: none;
+      transition: 0.2s;
+    }
+
+    a:hover {
+      color: #54a6ff;
+      text-decoration: none;
+      transition: 0.2s;
+      cursor: pointer;
+    }
+
+    a img:hover {
+      height: 260px;
+      width: 185px;
+      transition: 0.3s;
+      box-shadow: 2px 2px 15px #4a4a4a;
+    }
+
+    input {
+      display: block;
+      margin: 0 auto;
+      background-color: #131313;
+      color: #fff;
+      border: none;
+      border-bottom: 3px solid #fff;
+      height: 40px;
+      margin-top: 20px;
+      font-size: 1.2em;
+    }
+
+    input:focus {
+      outline: none;
+    }
+
+    input::placeholder {
+      color: #fff;
+      font-size: 1.2em;
+    }
+
+
+  </style>
+
+</body>
